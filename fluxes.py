@@ -8,6 +8,7 @@ Created on Thu Feb 27 13:42:20 2025
 # fluxes.py
 import numpy as np
 import pandas as pd
+from scipy.ndimage import sobel, laplace, gaussian_filter
 
 def downscale_pressure(press, t_orig, t_corr, dz):
     R = 287.0
