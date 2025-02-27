@@ -1,0 +1,3 @@
+lon,lat,forcing_csv,strain_csv,rho_csv,flow_speed,flow_dir
+39.82,-69.204,/media/junsaito/E4308E2C308E05B0/JS_model/Output/cfm_forcing_39_82_-69_204.csv,/media/junsaito/E4308E2C308E05B0/JS_model/Output/cfm_strain_inputs_39_82_-69_204.csv,/media/junsaito/E4308E2C308E05B0/JS_model/Output/cfm_rho_inputs_39_82_-69_204.csv,71.17917675060448,100.184494
+39.739,-69.241,/media/junsaito/E4308E2C308E05B0/JS_model/Output/cfm_forcing_39_739_-69_241.csv,/media/junsaito/E4308E2C308E05B0/JS_model/Output/cfm_strain_inputs_39_739_-69_241.csv,/media/junsaito/E4308E2C308E05B0/JS_model/Output/cfm_rho_inputs_39_739_-69_241.csv,71.17917675060448,100.184494
