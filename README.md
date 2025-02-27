@@ -1,2 +1,2 @@
 # Downsaling_ERA5
-This code can be useful to downscale your native ERA5 data with high resolution grids. You could get model output as each componet required for Firn model (e.g., the Community Firn Model)
+This code provides a method for downscaling native ERA5 data using high-resolution grids. It enables the generation of model outputs required for firn modeling, such as the Community Firn Model (CFM), by computing each necessary component with improved spatial resolution.
