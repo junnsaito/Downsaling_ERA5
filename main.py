@@ -222,7 +222,7 @@ def main():
             solpos_list = []
             for t in tqdm(ds_year.valid_time.values, desc="  Solar position calc"):
                 time_val = pd.to_datetime(t)  # **ERA5 の valid_time を使う**
-                solpos = pvlib.solarposition.get_solarposition(time_val, lat_target, lon_target)
+                solpos = pvlib.solarposition.get_solarposition(time_val, lon_target, lat_target)
                 solpos_list.append(solpos)
         
             # `solpos_list` を numpy 配列に変換（高速化）
