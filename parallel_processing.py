@@ -35,7 +35,7 @@ def process_time_step(
     lapse_value3,       # sktラプスレート
     delta_z_point,
     slope2d, aspect2d, curvature2d,
-    solpos,
+    zenith_array, azimuth_array,
     modis_albedo_value,
     rema_dem_data,
     time_interval_s,
@@ -170,8 +170,11 @@ def process_time_step(
     
     sw_val = ssrd_re[i0, j0] / time_interval_s
     lw_val = strd_re[i0, j0] / time_interval_s
-    zen_val = solpos["zenith"].values[0]
-    azi_val = solpos["azimuth"].values[0]
+    zen_val = zenith_array[i]
+    azi_val = azimuth_array[i]
+
+    # zen_val = solpos["zenith"].values[0]
+    # azi_val = solpos["azimuth"].values[0]
     sw_corr = apply_topo_correction(sw_val, zen_val, azi_val, slope2d[i0, j0],
                                     aspect2d[i0, j0], rema_dem_data, dx=500, i0=i0, j0=j0)
     lw_corr = downscale_longwave(strd_re[i0, j0] / time_interval_s, t2m_re[i0, j0], temp_corr)
@@ -217,7 +220,7 @@ def process_time_steps_chunk(
     W_dem, H_dem, i0, j0,
     lapse_value, lapse_value2, lapse_value3, delta_z_point,
     slope2d, aspect2d, curvature2d,
-    solpos, modis_albedo_value,
+    zenith_array, azimuth_array, modis_albedo_value,
     rema_dem_data,
     time_interval_s,
     station_data,
@@ -236,7 +239,7 @@ def process_time_steps_chunk(
     W_dem, H_dem, i0, j0,
     lapse_value, lapse_value2, lapse_value3, delta_z_point,
     slope2d, aspect2d, curvature2d,
-    solpos, modis_albedo_value,
+    zenith_array, azimuth_array, modis_albedo_value,
     rema_dem_data,
     time_interval_s,
     station_data,
@@ -253,7 +256,7 @@ def task(
     W_dem, H_dem, i0, j0,
     lapse_value, lapse_value2, lapse_value3, delta_z_point,
     slope2d, aspect2d, curvature2d,
-    solpos, modis_albedo_value,
+    zenith_array, azimuth_array, modis_albedo_value,
     rema_dem_data,
     time_interval_s,
     station_data,
@@ -272,7 +275,7 @@ def task(
     W_dem, H_dem, i0, j0,
     lapse_value, lapse_value2, lapse_value3, delta_z_point,
     slope2d, aspect2d, curvature2d,
-    solpos, modis_albedo_value,
+    zenith_array, azimuth_array, modis_albedo_value,
     rema_dem_data,
     time_interval_s,
     station_data,

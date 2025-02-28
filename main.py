@@ -210,11 +210,31 @@ def main():
             from dem import compute_slope_and_aspect
             slope2d, aspect2d = compute_slope_and_aspect(rema_dem_data, dx=500)
 
-            # 時刻0 の値で太陽天頂角など
-            time_val_0 = pd.to_datetime(ds_year.valid_time.values[0])
-            lat_mean_year = float(ds_year.latitude.mean().values)
-            lon_mean_year = float(ds_year.longitude.mean().values)
-            solpos = pvlib.solarposition.get_solarposition(time_val_0, lat_mean_year, lon_mean_year)
+            # # 時刻0 の値で太陽天頂角など
+            # time_val_0 = pd.to_datetime(ds_year.valid_time.values[0])
+            # lat_mean_year = float(ds_year.latitude.mean().values)
+            # lon_mean_year = float(ds_year.longitude.mean().values)
+            # solpos = pvlib.solarposition.get_solarposition(time_val_0, lat_mean_year, lon_mean_year)
+            
+            
+        # **各時間ステップごとに太陽位置を計算**
+            print("  Calculating solar position for each timestamp...")
+            solpos_list = []
+            for t in tqdm(ds_year.valid_time.values, desc="  Solar position calc"):
+                time_val = pd.to_datetime(t)  # **ERA5 の valid_time を使う**
+                solpos = pvlib.solarposition.get_solarposition(time_val, lat_target, lon_target)
+                solpos_list.append(solpos)
+        
+            # `solpos_list` を numpy 配列に変換（高速化）
+            solpos_array = np.array([[sp.zenith.values[0], sp.azimuth.values[0]] for sp in solpos_list])
+        
+            # `zenith` と `azimuth` を `process_time_steps_chunk` に渡せる形にする
+            zenith_array = solpos_array[:, 0]  # 太陽天頂角（zenith）
+            azimuth_array = solpos_array[:, 1]  # 太陽方位角（azimuth）            
+            
+            
+            
+            
 
             # 共有メモリ
             shm = shared_memory.SharedMemory(create=True, size=rema_dem_data.nbytes)
@@ -240,7 +260,7 @@ def main():
                         lapse_value, lapse_value2,   # lapse
                         lapse_value3, delta_z_point,
                         slope2d, aspect2d, curvature2d,
-                        solpos, modis_albedo_value,
+                        zenith_array, azimuth_array, modis_albedo_value,
                         rema_dem_data,
                         time_interval_s,
                         station_data,
